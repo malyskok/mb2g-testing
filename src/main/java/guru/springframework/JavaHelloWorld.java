@@ -6,6 +6,7 @@ package guru.springframework;
 public class JavaHelloWorld {
 
     public String getHello(){
+        String string = new String();
         return "Hello World";
     }
 
