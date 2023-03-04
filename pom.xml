@@ -14,6 +14,7 @@
         <java.version>11</java.version>
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
+        <TEST_HOST>localhost</TEST_HOST>
     </properties>
 
     <dependencies>
@@ -53,7 +54,34 @@
 <!--        </repository>-->
 <!--    </distributionManagement>-->
 
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.22.0</version>
+                <configuration>
+                    <environmentVariables>
+                        <TEST_HOST>${TEST_HOST}</TEST_HOST>
+                    </environmentVariables>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
     <profiles>
+        <profile>
+            <id>test</id>
+            <properties>
+                <TEST_HOST>test.example.com</TEST_HOST>
+            </properties>
+        </profile>
+        <profile>
+            <id>uat</id>
+            <properties>
+                <TEST_HOST>uat.test.example.com</TEST_HOST>
+            </properties>
+        </profile>
         <profile>
             <id>nexus</id>
             <distributionManagement>
@@ -69,6 +97,9 @@
             <activation>
                 <activeByDefault>true</activeByDefault>
             </activation>
+            <properties>
+                <TEST_HOST>nexus.test.example.com</TEST_HOST>
+            </properties>
         </profile>
     </profiles>
 </project>
